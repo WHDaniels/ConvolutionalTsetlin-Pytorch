@@ -103,8 +103,8 @@ def get_dataloaders(data_info, rank, args):
     train_ds = TMDataset(data_info['train_root'], data_info['train_size'], rank, args, pos_grid_size=19)
     test_ds = TMDataset(data_info['test_root'], data_info['test_size'], rank, args, pos_grid_size=19)
     pw = True if args.num_workers else False
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=args.num_workers, persistent_workers=pw)
-    test_loader = DataLoader(test_ds, batch_size=8, shuffle=True, pin_memory=True, num_workers=args.num_workers, persistent_workers=pw)
+    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=args.pm, num_workers=args.num_workers, persistent_workers=pw)
+    test_loader = DataLoader(test_ds, batch_size=8, shuffle=True, pin_memory=args.pm, num_workers=args.num_workers, persistent_workers=pw)
     return train_loader, test_loader
 
 def get_final_test_loader(data_info, rank, args):

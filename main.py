@@ -87,8 +87,11 @@ def main(args):
     else:
         raise NotImplementedError("`args.dtype` must be either `float32` or `float16`")
     num_classes = 10
-    # tm = ConvTM(classes=num_classes, ks=args.ks, channels=args.channels, num_clauses=250, S=5, T=15, dtype=dtype, device='cuda')
-    tm = ConvCoTM(classes=num_classes, ks=args.ks, channels=args.channels, num_clauses=250, S=10, T=300, dtype=dtype, device='cuda')
+    
+    # if args.model == 'conv':
+    #     tm = ConvTM(classes=num_classes, ks=args.ks, channels=args.channels, num_clauses=args.num_clauses, S=args.S, T=args.T, dtype=dtype, device=args.device)
+    # elif args.model == 'cotm':
+    tm = ConvCoTM(classes=num_classes, ks=args.ks, channels=args.channels, num_clauses=args.num_clauses, S=args.S, T=args.T, dtype=dtype, device=args.device)
 
     sharded_test_accuracy = torch.zeros((args.epochs, args.num_processes)).share_memory_()
 
@@ -115,7 +118,7 @@ def main(args):
     args.num_processes = 1
     rank = 0
     test_loader = get_final_test_loader(data_info, rank, args)
-    test_loop(tm, test_loader, 10)
+    test_loop(tm, test_loader)
 
     print(f'Total time taken: {time.perf_counter()-start} seconds')
 

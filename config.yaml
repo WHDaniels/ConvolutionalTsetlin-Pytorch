@@ -1,12 +1,16 @@
 ### ConvTM training config ###
 
 # Multiprocessing arguments
-num_processes: 6
+num_processes: 1
 num_workers: 0
 
 # Training setup arguments
+model: 'cotm'
 batch_size: 2
-epochs: 30
+epochs: 2
+num_clauses: 20
+S: 10
+T: 30
 
 # Image processing arguments
 ks: 10
@@ -14,7 +18,9 @@ channels: 2
 
 # Misc arguments
 dtype: float16
+device: cpu
 seed: 0
+pm: False  # Pin memory
 
 # Experimentation arguments
 runs: 1
